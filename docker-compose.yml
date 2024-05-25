@@ -73,20 +73,6 @@ services:
         "--enhance-graphiql",
       ]
   ###########
-  # pgadmin #
-  ###########
-  # pgadmin:
-  #   image: dpage/pgadmin4:latest
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: admin@example.com
-  #     PGADMIN_DEFAULT_PASSWORD: admin
-  #   ports:
-  #     - "8081:8081"
-  #   networks:
-  #     - api
-  #   depends_on:
-  #     - db
-  ###########
   # swagger #
   ###########
   swagger:
@@ -97,17 +83,6 @@ services:
     restart: always
     networks:
       - api
-  #######
-  # ELK #
-  #######
-  elasticsearch:
-    extends:
-      file: es-services.yml
-      service: elasticsearch
-  es-indexer:
-    extends:
-      file: es-services.yml
-      service: es-indexer
 networks:
   api:
     driver: bridge
