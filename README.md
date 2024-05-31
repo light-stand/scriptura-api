@@ -18,9 +18,7 @@ flowchart TD
     A -- GraphQL API --> C(PostGraphile)
     A -- RESTful Docs --> D(Swagger UI)
     D --> B
-    A --Web admin --> E(pgAdmin 4)
-    E --> F(PostgreSQL)
-    B --> F
+    B --> F(PostgreSQL)
     C --> F
 
 ```
