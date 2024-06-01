@@ -1,13 +1,19 @@
+
+-- Schema
+CREATE SCHEMA bible;
+CREATE SCHEMA resource;
+
 -- Role
 CREATE USER anon;
 
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO anon;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO anon;
+GRANT USAGE ON SCHEMA bible TO anon;
+GRANT SELECT ON ALL TABLES IN SCHEMA bible TO anon;
+ALTER DEFAULT PRIVILEGES IN SCHEMA bible GRANT SELECT ON TABLES TO anon;
+GRANT SELECT ON ALL TABLES IN SCHEMA resource TO anon;
+ALTER DEFAULT PRIVILEGES IN SCHEMA resource GRANT SELECT ON TABLES TO anon;
 
--- Schema
-CREATE SCHEMA bible;
-
-CREATE SCHEMA resource;
 
 -- Tables
 -- Bible structure
@@ -78,7 +84,8 @@ CREATE TABLE
         chapter_num int,
         verse_num int,
         "year" int,
-        STATUS varchar
+        STATUS varchar,
+        text text
     );
 
 COPY verse (
