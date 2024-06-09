@@ -32,7 +32,7 @@ services:
       - DB_SCHEMA=${DB_SCHEMA}
     volumes:
       - "./db/initdb:/docker-entrypoint-initdb.d"
-      - "./data/output:/data"
+      - "./db/data:/data"
     networks:
       - api
     restart: always

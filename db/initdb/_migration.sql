@@ -1,59 +1,58 @@
--- Role
-CREATE USER anon;
-
-GRANT USAGE ON SCHEMA public TO anon;
-
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO anon;
-
-GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO anon;
-
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO anon;
 
 -- Schema
 CREATE SCHEMA bible;
-
 CREATE SCHEMA resource;
+
+-- Role
+CREATE USER anon;
+
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO anon;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO anon;
+GRANT USAGE ON SCHEMA bible TO anon;
+GRANT SELECT ON ALL TABLES IN SCHEMA bible TO anon;
+ALTER DEFAULT PRIVILEGES IN SCHEMA bible GRANT SELECT ON TABLES TO anon;
+GRANT SELECT ON ALL TABLES IN SCHEMA resource TO anon;
+ALTER DEFAULT PRIVILEGES IN SCHEMA resource GRANT SELECT ON TABLES TO anon;
+
 
 -- Tables
 -- Bible structure
 -- Testament
 CREATE TABLE
-    public.testament (
-        id serial4 NOT NULL PRIMARY KEY,
-        "name" varchar NULL,
-        slug varchar NULL,
-        code varchar NULL
+    testament (
+        id int PRIMARY KEY,
+        "name" varchar,
+        slug varchar,
+        code varchar
     );
 
-COPY public.testament (id, name, slug, code)
+COPY testament (id, name, slug, code)
 FROM '/data/testament.csv' DELIMITER ',' CSV HEADER;
 
 -- Book division
 CREATE TABLE
-    public.book_division (
-        id serial4 NOT NULL PRIMARY KEY,
-        "name" varchar NULL,
-        slug varchar NULL,
-        testament_id int4 NULL,
-        CONSTRAINT book_divisions_testament_id_fkey FOREIGN KEY (testament_id) REFERENCES public.testament (id)
+    book_division (
+        id int PRIMARY KEY,
+        "name" varchar,
+        slug varchar,
+        testament_id int references testament(id)
     );
 
-COPY public.book_division (id, name, slug, testament_id)
+COPY book_division (id, name, slug, testament_id)
 FROM '/data/book_division.csv' DELIMITER ',' CSV HEADER;
 
 -- Book
 CREATE TABLE
-    public.book (
-        id serial4 NOT NULL PRIMARY KEY,
-        division_id int4 NULL,
-        theographic_id varchar NULL,
-        slug varchar NULL,
-        "name" varchar NULL,
-        short_name varchar NULL,
-        CONSTRAINT books_division_id_fkey FOREIGN KEY (division_id) REFERENCES public.book_division (id)
+    book (
+        id int PRIMARY KEY,
+        division_id int references book_division(id),
+        theographic_id varchar,
+        slug varchar,
+        "name" varchar,
+        short_name varchar
     );
 
-COPY public.book (
+COPY book (
     id,
     division_id,
     theographic_id,
@@ -65,33 +64,31 @@ FROM '/data/book.csv' DELIMITER ',' CSV HEADER;
 
 -- Chapter
 CREATE TABLE
-    public.chapter (
-        id serial4 NOT NULL PRIMARY KEY,
-        book_id int4 NULL,
-        theographic_id varchar NULL,
-        chapter_num int4 NULL,
-        CONSTRAINT chapters_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.book (id)
+    chapter (
+        id int PRIMARY KEY,
+        book_id int references book(id),
+        theographic_id varchar,
+        chapter_num int
     );
 
-COPY public.chapter (id, book_id, theographic_id, chapter_num)
+COPY chapter (id, book_id, theographic_id, chapter_num)
 FROM '/data/chapter.csv' DELIMITER ',' CSV HEADER;
 
 -- Verse
 CREATE TABLE
-    public.verse (
-        id serial4 NOT NULL PRIMARY KEY,
-        book_id int4 NULL,
-        chapter_id int4 NULL,
-        theographic_id varchar NULL,
-        chapter_num int4 NULL,
-        verse_num int4 NULL,
-        "year" int4 NULL,
-        STATUS varchar NULL,
-        CONSTRAINT verses_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.book (id),
-        CONSTRAINT verses_chapter_id_fkey FOREIGN KEY (chapter_id) REFERENCES public.chapter (id)
+    verse (
+        id int PRIMARY KEY,
+        book_id int references book(id),
+        chapter_id int references chapter(id),
+        theographic_id varchar,
+        chapter_num int,
+        verse_num int,
+        "year" int,
+        STATUS varchar,
+        text text
     );
 
-COPY public.verse (
+COPY verse (
     id,
     book_id,
     chapter_id,
@@ -106,20 +103,20 @@ FROM '/data/verse.csv' DELIMITER ',' CSV HEADER;
 -- Encyclopedia tables
 -- Event
 CREATE TABLE
-    public.event (
-        id serial4 NOT NULL PRIMARY KEY,
-        theographic_id varchar NULL,
-        title varchar NULL,
-        start_date varchar NULL,
-        duration varchar NULL,
-        predecessor int4 NULL,
-        part_of int4 NULL,
-        notes varchar NULL,
-        "lag" varchar NULL,
-        lag_type varchar NULL
+    event (
+        id int PRIMARY KEY,
+        theographic_id varchar,
+        title varchar,
+        start_date varchar,
+        duration varchar,
+        predecessor int,
+        part_of int,
+        notes varchar,
+        "lag" varchar,
+        lag_type varchar
     );
 
-COPY public.event (
+COPY event (
     id,
     theographic_id,
     title,
@@ -135,27 +132,27 @@ FROM '/data/event.csv' DELIMITER ',' CSV HEADER;
 
 -- Person
 CREATE TABLE
-    public.person (
-        id serial4 NOT NULL PRIMARY KEY,
-        theographic_id varchar NULL,
-        slug varchar NULL,
-        "name" varchar NULL,
-        surname varchar NULL,
-        display_name varchar NULL,
-        gender varchar NULL,
-        alias varchar NULL,
-        min_year int4 NULL,
-        max_year int4 NULL,
-        birth_year int4 NULL,
-        death_year int4 NULL,
-        STATUS varchar NULL,
-        is_proper_name bool NULL,
-        ambiguous bool NULL,
-        disambiguation_temp varchar NULL,
+    person (
+        id int PRIMARY KEY,
+        theographic_id varchar,
+        slug varchar,
+        "name" varchar,
+        surname varchar,
+        display_name varchar,
+        gender varchar,
+        alias varchar,
+        min_year int,
+        max_year int,
+        birth_year int,
+        death_year int,
+        STATUS varchar,
+        is_proper_name bool,
+        ambiguous bool,
+        disambiguation_temp varchar,
         CONSTRAINT person_slug_key UNIQUE (slug)
     );
 
-COPY public.person (
+COPY person (
     id,
     theographic_id,
     slug,
@@ -177,29 +174,29 @@ FROM '/data/person.csv' DELIMITER ',' CSV HEADER;
 
 -- Place
 CREATE TABLE
-    public.place (
-        id serial4 NOT NULL PRIMARY KEY,
-        theographic_id varchar NULL,
-        slug varchar NULL,
-        display_title varchar NULL,
-        latitude float8 NULL,
-        longitude float8 NULL,
-        kjv_name varchar NULL,
-        esv_name varchar NULL,
-        feature_type varchar NULL,
-        open_bible_lat float8 NULL,
-        open_bible_long float8 NULL,
-        root_id int4 NULL,
-        "precision" varchar NULL,
-        aliases varchar NULL,
-        "comment" varchar NULL,
-        STATUS varchar NULL,
-        ambiguous bool NULL,
-        duplicate_of varchar NULL,
+    place (
+        id int PRIMARY KEY,
+        theographic_id varchar,
+        slug varchar,
+        display_title varchar,
+        latitude float8,
+        longitude float8,
+        kjv_name varchar,
+        esv_name varchar,
+        feature_type varchar,
+        open_bible_lat float8,
+        open_bible_long float8,
+        root_id int,
+        "precision" varchar,
+        aliases varchar,
+        "comment" varchar,
+        STATUS varchar,
+        ambiguous bool,
+        duplicate_of varchar,
         CONSTRAINT place_slug_key UNIQUE (slug)
     );
 
-COPY public.place (
+COPY place (
     id,
     theographic_id,
     slug,
@@ -223,69 +220,66 @@ FROM '/data/place.csv' DELIMITER ',' CSV HEADER;
 
 -- Join tables
 CREATE TABLE
-    public.event_verse (
-        id serial4 NOT NULL PRIMARY KEY,
-        event_id int4 NULL,
-        verse_id int4 NULL,
-        CONSTRAINT event_verses_event_id_fkey FOREIGN KEY (event_id) REFERENCES public.event (id),
-        CONSTRAINT event_verses_verse_id_fkey FOREIGN KEY (verse_id) REFERENCES public.verse (id)
+    event_verse (
+        id int,
+        event_id int references event(id),
+        verse_id int references verse(id),
+        primary key(id, event_id, verse_id)
     );
 
-COPY public.event_verse (id, event_id, verse_id)
+COPY event_verse (id, event_id, verse_id)
 FROM '/data/event_verse.csv' DELIMITER ',' CSV HEADER;
 
 --
 CREATE TABLE
-    public.person_verse (
-        id serial4 NOT NULL PRIMARY KEY,
-        person_id int4 NULL,
-        verse_id int4 NULL,
-        CONSTRAINT person_verses_person_id_fkey FOREIGN KEY (person_id) REFERENCES public.person (id),
-        CONSTRAINT person_verses_verse_id_fkey FOREIGN KEY (verse_id) REFERENCES public.verse (id)
+    person_verse (
+        id int,
+        person_id int references person(id),
+        verse_id int references verse(id),
+        primary key(id, person_id, verse_id)
     );
 
-COPY public.person_verse (id, person_id, verse_id)
+COPY person_verse (id, person_id, verse_id)
 FROM '/data/person_verse.csv' DELIMITER ',' CSV HEADER;
 
 --
 CREATE TABLE
-    public.place_verse (
-        id serial4 NOT NULL PRIMARY KEY,
-        place_id int4 NULL,
-        verse_id int4 NULL,
-        CONSTRAINT place_verses_place_id_fkey FOREIGN KEY (place_id) REFERENCES public.place (id),
-        CONSTRAINT place_verses_verse_id_fkey FOREIGN KEY (verse_id) REFERENCES public.verse (id)
+    place_verse (
+        id int,
+        place_id int references place(id),
+        verse_id int references verse(id),
+        primary key(id, place_id, verse_id)
     );
 
-COPY public.place_verse (id, place_id, verse_id)
+COPY place_verse (id, place_id, verse_id)
 FROM '/data/place_verse.csv' DELIMITER ',' CSV HEADER;
 
 -- Bible versions
 CREATE TABLE
-    public.bible_version (
-        id serial4 NOT NULL PRIMARY KEY,
-        "translation" varchar NULL,
-        STATUS varchar NULL,
-        "table_name" varchar NULL
+    bible_version (
+        id int PRIMARY KEY,
+        "translation" varchar,
+        STATUS varchar,
+        "table_name" varchar
     );
 
-COPY public.bible_version (id, translation, STATUS, table_name)
+COPY bible_version (id, translation, STATUS, table_name)
 FROM '/data/bible_version.csv' DELIMITER ',' CSV HEADER;
 
 -- Resources
 CREATE TABLE
-    public.resource (
-        id serial4 NOT NULL PRIMARY KEY,
-        slug varchar NULL,
-        "name" varchar NULL,
-        alt varchar NULL,
-        author varchar NULL,
-        publish_year int4 NULL,
-        "language" varchar NULL,
-        wikipedia_slug varchar NULL
+    resource (
+        id int PRIMARY KEY,
+        slug varchar,
+        "name" varchar,
+        alt varchar,
+        author varchar,
+        publish_year int,
+        "language" varchar,
+        wikipedia_slug varchar
     );
 
-COPY public.resource (
+COPY resource (
     id,
     slug,
     name,
