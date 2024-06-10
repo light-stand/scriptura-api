@@ -33,6 +33,10 @@ CREATE INDEX ON testaments("name");
 CREATE INDEX ON testaments(slug);
 CREATE INDEX ON testaments(code);
 
+CREATE VIEW testaments_view AS
+SELECT id, name, slug, code
+FROM testaments;
+
 -- Book division
 CREATE TABLE
     book_divisions (
@@ -48,6 +52,14 @@ FROM '/data/book_divisions.csv' DELIMITER ',' CSV HEADER;
 CREATE INDEX ON book_divisions("name");
 CREATE INDEX ON book_divisions(slug);
 CREATE INDEX ON book_divisions(testament_id);
+
+CREATE VIEW book_divisions_view AS
+SELECT 
+    id, 
+    name, 
+    slug, 
+    testament_id as testamentId
+FROM book_divisions;
 
 -- Book
 CREATE TABLE
@@ -75,6 +87,15 @@ CREATE INDEX ON books("name");
 CREATE INDEX ON books(slug);
 CREATE INDEX ON books(short_name);
 
+CREATE VIEW books_view AS
+SELECT 
+    id, 
+    division_id as divisionId,
+    slug, 
+    name, 
+    short_name as shortName
+FROM books;
+
 
 -- Chapter
 CREATE TABLE
@@ -90,6 +111,13 @@ FROM '/data/chapters.csv' DELIMITER ',' CSV HEADER;
 
 CREATE INDEX ON chapters(book_id);
 CREATE INDEX ON chapters(chapter_num);
+
+CREATE VIEW chapters_view AS
+SELECT 
+    id, 
+    book_id as bookId, 
+    chapter_num as chapterNum
+FROM chapters;
 
 -- Verse
 CREATE TABLE
@@ -121,6 +149,17 @@ CREATE INDEX ON verses(book_id);
 CREATE INDEX ON verses(chapter_id);
 CREATE INDEX ON verses(verse_num);
 
+CREATE VIEW verses_view AS
+SELECT 
+    id, 
+    book_id as bookId, 
+    chapter_id as chapterId, 
+    chapter_num as chapterNum, 
+    verse_num as verseNum, 
+    "year", 
+    "status", 
+    text
+FROM verses;
 
 -- Encyclopedia tables
 -- Event
@@ -156,6 +195,19 @@ CREATE INDEX ON events(title);
 CREATE INDEX ON events(start_date);
 CREATE INDEX ON events(predecessor);
 CREATE INDEX ON events(part_of);
+
+CREATE VIEW events_view AS
+SELECT 
+    id, 
+    title, 
+    start_date as startDate, 
+    duration, 
+    predecessor, 
+    part_of as partOf, 
+    notes, 
+    lag, 
+    lag_type as lagType
+FROM events;
 
 
 -- Person
@@ -205,6 +257,21 @@ CREATE INDEX ON people(surname);
 CREATE INDEX ON people(slug);
 CREATE INDEX ON people(display_name);
 
+CREATE VIEW people_view AS
+SELECT 
+    id, 
+    slug, 
+    name, 
+    surname, 
+    display_name as displayName,
+    gender,
+    alias,
+    min_year as minYear,
+    max_year as maxYear,
+    birth_year as birthYear,
+    death_year as deathYear,
+    "status"
+FROM people;
 
 -- Place
 CREATE TABLE
@@ -259,6 +326,27 @@ CREATE INDEX ON places(longitude);
 CREATE INDEX ON places(kjv_name);
 CREATE INDEX ON places(esv_name);
 CREATE INDEX ON places(feature_type);
+
+CREATE VIEW places_view AS
+SELECT 
+    id, 
+    slug, 
+    display_title as displayTitle, 
+    latitude, 
+    longitude, 
+    kjv_name as kjvName, 
+    esv_name as esvName, 
+    feature_type as featureType, 
+    open_bible_lat as openBibleLat, 
+    open_bible_long as openBibleLong, 
+    root_id as rootId, 
+    precision, 
+    aliases, 
+    "comment", 
+    "status", 
+    ambiguous, 
+    duplicate_of as duplicateOf
+FROM places;
 
 
 -- Join tables
@@ -319,6 +407,13 @@ CREATE INDEX ON bible_versions("translation");
 CREATE INDEX ON bible_versions("status");
 CREATE INDEX ON bible_versions(table_name);
 
+CREATE VIEW bible_versions_view AS
+SELECT 
+    id, 
+    translation, 
+    "status", 
+    table_name as tableName
+FROM bible_versions;
 
 -- Resources
 CREATE TABLE
@@ -352,3 +447,15 @@ CREATE INDEX ON resources(author);
 CREATE INDEX ON resources(publish_year);
 CREATE INDEX ON resources("language");
 CREATE INDEX ON resources(wikipedia_slug);
+
+CREATE VIEW resources_view AS
+SELECT 
+    id, 
+    slug, 
+    name, 
+    alt, 
+    author, 
+    publish_year as publishYear, 
+    "language", 
+    wikipedia_slug as wikipediaSlug
+FROM resources;
