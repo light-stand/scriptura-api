@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION bible(version TEXT default 'en_kj')
-RETURNS SETOF public.verse AS $$
+RETURNS SETOF public.verses AS $$
 BEGIN
     RETURN QUERY EXECUTE format('
         SELECT 
@@ -12,7 +12,7 @@ BEGIN
         v.year, 
         v.status, 
         b.text as text
-        FROM public.verse v
+        FROM public.verses v
         JOIN bible.%I b ON v.id = b.verse_id', version);
 END;
 $$ LANGUAGE plpgsql;

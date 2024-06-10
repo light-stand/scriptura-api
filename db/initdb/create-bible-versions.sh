@@ -8,7 +8,7 @@ for file in *.csv; do
 
         psql -U ${POSTGRES_USER} -c "
             CREATE TABLE IF NOT EXISTS bible.$table_name (
-                verse_id int references public.verse(id),
+                verse_id int references public.verses(id),
                 text TEXT,
                 PRIMARY KEY (verse_id)
             );

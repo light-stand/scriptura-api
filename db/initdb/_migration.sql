@@ -19,40 +19,40 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA resource GRANT SELECT ON TABLES TO anon;
 -- Bible structure
 -- Testament
 CREATE TABLE
-    testament (
+    testaments (
         id int PRIMARY KEY,
         "name" varchar,
         slug varchar,
         code varchar
     );
 
-COPY testament (id, name, slug, code)
-FROM '/data/testament.csv' DELIMITER ',' CSV HEADER;
+COPY testaments (id, name, slug, code)
+FROM '/data/testaments.csv' DELIMITER ',' CSV HEADER;
 
 -- Book division
 CREATE TABLE
-    book_division (
+    book_divisions (
         id int PRIMARY KEY,
         "name" varchar,
         slug varchar,
-        testament_id int references testament(id)
+        testament_id int references testaments(id)
     );
 
-COPY book_division (id, name, slug, testament_id)
-FROM '/data/book_division.csv' DELIMITER ',' CSV HEADER;
+COPY book_divisions (id, name, slug, testament_id)
+FROM '/data/book_divisions.csv' DELIMITER ',' CSV HEADER;
 
 -- Book
 CREATE TABLE
-    book (
+    books (
         id int PRIMARY KEY,
-        division_id int references book_division(id),
+        division_id int references book_divisions(id),
         theographic_id varchar,
         slug varchar,
         "name" varchar,
         short_name varchar
     );
 
-COPY book (
+COPY books (
     id,
     division_id,
     theographic_id,
@@ -60,26 +60,26 @@ COPY book (
     name,
     short_name
 )
-FROM '/data/book.csv' DELIMITER ',' CSV HEADER;
+FROM '/data/books.csv' DELIMITER ',' CSV HEADER;
 
 -- Chapter
 CREATE TABLE
-    chapter (
+    chapters (
         id int PRIMARY KEY,
-        book_id int references book(id),
+        book_id int references books(id),
         theographic_id varchar,
         chapter_num int
     );
 
-COPY chapter (id, book_id, theographic_id, chapter_num)
-FROM '/data/chapter.csv' DELIMITER ',' CSV HEADER;
+COPY chapters (id, book_id, theographic_id, chapter_num)
+FROM '/data/chapters.csv' DELIMITER ',' CSV HEADER;
 
 -- Verse
 CREATE TABLE
-    verse (
+    verses (
         id int PRIMARY KEY,
-        book_id int references book(id),
-        chapter_id int references chapter(id),
+        book_id int references books(id),
+        chapter_id int references chapters(id),
         theographic_id varchar,
         chapter_num int,
         verse_num int,
@@ -88,7 +88,7 @@ CREATE TABLE
         text text
     );
 
-COPY verse (
+COPY verses (
     id,
     book_id,
     chapter_id,
@@ -98,12 +98,12 @@ COPY verse (
     year,
     STATUS
 )
-FROM '/data/verse.csv' DELIMITER ',' CSV HEADER;
+FROM '/data/verses.csv' DELIMITER ',' CSV HEADER;
 
 -- Encyclopedia tables
 -- Event
 CREATE TABLE
-    event (
+    events (
         id int PRIMARY KEY,
         theographic_id varchar,
         title varchar,
@@ -116,7 +116,7 @@ CREATE TABLE
         lag_type varchar
     );
 
-COPY event (
+COPY events (
     id,
     theographic_id,
     title,
@@ -128,11 +128,11 @@ COPY event (
     lag,
     lag_type
 )
-FROM '/data/event.csv' DELIMITER ',' CSV HEADER;
+FROM '/data/events.csv' DELIMITER ',' CSV HEADER;
 
 -- Person
 CREATE TABLE
-    person (
+    people (
         id int PRIMARY KEY,
         theographic_id varchar,
         slug varchar,
@@ -152,7 +152,7 @@ CREATE TABLE
         CONSTRAINT person_slug_key UNIQUE (slug)
     );
 
-COPY person (
+COPY people (
     id,
     theographic_id,
     slug,
@@ -170,11 +170,11 @@ COPY person (
     ambiguous,
     disambiguation_temp
 )
-FROM '/data/person.csv' DELIMITER ',' CSV HEADER;
+FROM '/data/people.csv' DELIMITER ',' CSV HEADER;
 
 -- Place
 CREATE TABLE
-    place (
+    places (
         id int PRIMARY KEY,
         theographic_id varchar,
         slug varchar,
@@ -196,7 +196,7 @@ CREATE TABLE
         CONSTRAINT place_slug_key UNIQUE (slug)
     );
 
-COPY place (
+COPY places (
     id,
     theographic_id,
     slug,
@@ -216,59 +216,59 @@ COPY place (
     ambiguous,
     duplicate_of
 )
-FROM '/data/place.csv' DELIMITER ',' CSV HEADER;
+FROM '/data/places.csv' DELIMITER ',' CSV HEADER;
 
 -- Join tables
 CREATE TABLE
-    event_verse (
+    events_verses (
         id int,
-        event_id int references event(id),
-        verse_id int references verse(id),
+        event_id int references events(id),
+        verse_id int references verses(id),
         primary key(id, event_id, verse_id)
     );
 
-COPY event_verse (id, event_id, verse_id)
-FROM '/data/event_verse.csv' DELIMITER ',' CSV HEADER;
+COPY events_verses (id, event_id, verse_id)
+FROM '/data/events_verses.csv' DELIMITER ',' CSV HEADER;
 
 --
 CREATE TABLE
-    person_verse (
+    people_verses (
         id int,
-        person_id int references person(id),
-        verse_id int references verse(id),
+        person_id int references people(id),
+        verse_id int references verses(id),
         primary key(id, person_id, verse_id)
     );
 
-COPY person_verse (id, person_id, verse_id)
-FROM '/data/person_verse.csv' DELIMITER ',' CSV HEADER;
+COPY people_verses (id, person_id, verse_id)
+FROM '/data/people_verses.csv' DELIMITER ',' CSV HEADER;
 
 --
 CREATE TABLE
-    place_verse (
+    places_verses (
         id int,
-        place_id int references place(id),
-        verse_id int references verse(id),
+        place_id int references places(id),
+        verse_id int references verses(id),
         primary key(id, place_id, verse_id)
     );
 
-COPY place_verse (id, place_id, verse_id)
-FROM '/data/place_verse.csv' DELIMITER ',' CSV HEADER;
+COPY places_verses (id, place_id, verse_id)
+FROM '/data/places_verses.csv' DELIMITER ',' CSV HEADER;
 
 -- Bible versions
 CREATE TABLE
-    bible_version (
+    bible_versions (
         id int PRIMARY KEY,
         "translation" varchar,
         STATUS varchar,
         "table_name" varchar
     );
 
-COPY bible_version (id, translation, STATUS, table_name)
-FROM '/data/bible_version.csv' DELIMITER ',' CSV HEADER;
+COPY bible_versions (id, translation, STATUS, table_name)
+FROM '/data/bible_versions.csv' DELIMITER ',' CSV HEADER;
 
 -- Resources
 CREATE TABLE
-    resource (
+    resources (
         id int PRIMARY KEY,
         slug varchar,
         "name" varchar,
@@ -279,7 +279,7 @@ CREATE TABLE
         wikipedia_slug varchar
     );
 
-COPY resource (
+COPY resources (
     id,
     slug,
     name,
@@ -289,4 +289,4 @@ COPY resource (
     language,
     wikipedia_slug
 )
-FROM '/data/resource.csv' DELIMITER ',' CSV HEADER;
+FROM '/data/resources.csv' DELIMITER ',' CSV HEADER;
