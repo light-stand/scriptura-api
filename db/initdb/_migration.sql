@@ -29,6 +29,10 @@ CREATE TABLE
 COPY testaments (id, name, slug, code)
 FROM '/data/testaments.csv' DELIMITER ',' CSV HEADER;
 
+CREATE INDEX ON testaments("name");
+CREATE INDEX ON testaments(slug);
+CREATE INDEX ON testaments(code);
+
 -- Book division
 CREATE TABLE
     book_divisions (
@@ -40,6 +44,10 @@ CREATE TABLE
 
 COPY book_divisions (id, name, slug, testament_id)
 FROM '/data/book_divisions.csv' DELIMITER ',' CSV HEADER;
+
+CREATE INDEX ON book_divisions("name");
+CREATE INDEX ON book_divisions(slug);
+CREATE INDEX ON book_divisions(testament_id);
 
 -- Book
 CREATE TABLE
@@ -62,6 +70,12 @@ COPY books (
 )
 FROM '/data/books.csv' DELIMITER ',' CSV HEADER;
 
+CREATE INDEX ON books(division_id);
+CREATE INDEX ON books("name");
+CREATE INDEX ON books(slug);
+CREATE INDEX ON books(short_name);
+
+
 -- Chapter
 CREATE TABLE
     chapters (
@@ -74,6 +88,9 @@ CREATE TABLE
 COPY chapters (id, book_id, theographic_id, chapter_num)
 FROM '/data/chapters.csv' DELIMITER ',' CSV HEADER;
 
+CREATE INDEX ON chapters(book_id);
+CREATE INDEX ON chapters(chapter_num);
+
 -- Verse
 CREATE TABLE
     verses (
@@ -84,7 +101,7 @@ CREATE TABLE
         chapter_num int,
         verse_num int,
         "year" int,
-        STATUS varchar,
+        "status" varchar,
         text text
     );
 
@@ -96,9 +113,14 @@ COPY verses (
     chapter_num,
     verse_num,
     year,
-    STATUS
+    "status"
 )
 FROM '/data/verses.csv' DELIMITER ',' CSV HEADER;
+
+CREATE INDEX ON verses(book_id);
+CREATE INDEX ON verses(chapter_id);
+CREATE INDEX ON verses(verse_num);
+
 
 -- Encyclopedia tables
 -- Event
@@ -109,8 +131,8 @@ CREATE TABLE
         title varchar,
         start_date varchar,
         duration varchar,
-        predecessor int,
-        part_of int,
+        predecessor int references events(id),
+        part_of int references events(id),
         notes varchar,
         "lag" varchar,
         lag_type varchar
@@ -130,6 +152,12 @@ COPY events (
 )
 FROM '/data/events.csv' DELIMITER ',' CSV HEADER;
 
+CREATE INDEX ON events(title);
+CREATE INDEX ON events(start_date);
+CREATE INDEX ON events(predecessor);
+CREATE INDEX ON events(part_of);
+
+
 -- Person
 CREATE TABLE
     people (
@@ -145,7 +173,7 @@ CREATE TABLE
         max_year int,
         birth_year int,
         death_year int,
-        STATUS varchar,
+        "status" varchar,
         is_proper_name bool,
         ambiguous bool,
         disambiguation_temp varchar,
@@ -165,12 +193,18 @@ COPY people (
     max_year,
     birth_year,
     death_year,
-    STATUS,
+    "status",
     is_proper_name,
     ambiguous,
     disambiguation_temp
 )
 FROM '/data/people.csv' DELIMITER ',' CSV HEADER;
+
+CREATE INDEX ON people("name");
+CREATE INDEX ON people(surname);
+CREATE INDEX ON people(slug);
+CREATE INDEX ON people(display_name);
+
 
 -- Place
 CREATE TABLE
@@ -186,13 +220,13 @@ CREATE TABLE
         feature_type varchar,
         open_bible_lat float8,
         open_bible_long float8,
-        root_id int,
+        root_id int references places(id),
         "precision" varchar,
         aliases varchar,
         "comment" varchar,
-        STATUS varchar,
+        "status" varchar,
         ambiguous bool,
-        duplicate_of varchar,
+        duplicate_of int references places(id),
         CONSTRAINT place_slug_key UNIQUE (slug)
     );
 
@@ -211,12 +245,21 @@ COPY places (
     root_id,
     precision,
     aliases,
-    COMMENT,
-    STATUS,
+    comment,
+    "status",
     ambiguous,
     duplicate_of
 )
 FROM '/data/places.csv' DELIMITER ',' CSV HEADER;
+
+CREATE INDEX ON places(slug);
+CREATE INDEX ON places(display_title);
+CREATE INDEX ON places(latitude);
+CREATE INDEX ON places(longitude);
+CREATE INDEX ON places(kjv_name);
+CREATE INDEX ON places(esv_name);
+CREATE INDEX ON places(feature_type);
+
 
 -- Join tables
 CREATE TABLE
@@ -230,6 +273,8 @@ CREATE TABLE
 COPY events_verses (id, event_id, verse_id)
 FROM '/data/events_verses.csv' DELIMITER ',' CSV HEADER;
 
+CREATE INDEX ON events_verses(event_id, verse_id);
+
 --
 CREATE TABLE
     people_verses (
@@ -241,6 +286,8 @@ CREATE TABLE
 
 COPY people_verses (id, person_id, verse_id)
 FROM '/data/people_verses.csv' DELIMITER ',' CSV HEADER;
+
+CREATE INDEX ON people_verses(person_id, verse_id);
 
 --
 CREATE TABLE
@@ -254,17 +301,24 @@ CREATE TABLE
 COPY places_verses (id, place_id, verse_id)
 FROM '/data/places_verses.csv' DELIMITER ',' CSV HEADER;
 
+CREATE INDEX ON places_verses(place_id, verse_id);
+
 -- Bible versions
 CREATE TABLE
     bible_versions (
         id int PRIMARY KEY,
         "translation" varchar,
-        STATUS varchar,
+        "status" varchar,
         "table_name" varchar
     );
 
-COPY bible_versions (id, translation, STATUS, table_name)
+COPY bible_versions (id, translation, "status", table_name)
 FROM '/data/bible_versions.csv' DELIMITER ',' CSV HEADER;
+
+CREATE INDEX ON bible_versions("translation");
+CREATE INDEX ON bible_versions("status");
+CREATE INDEX ON bible_versions(table_name);
+
 
 -- Resources
 CREATE TABLE
@@ -290,3 +344,11 @@ COPY resources (
     wikipedia_slug
 )
 FROM '/data/resources.csv' DELIMITER ',' CSV HEADER;
+
+CREATE INDEX ON resources(slug);
+CREATE INDEX ON resources("name");
+CREATE INDEX ON resources("alt");
+CREATE INDEX ON resources(author);
+CREATE INDEX ON resources(publish_year);
+CREATE INDEX ON resources("language");
+CREATE INDEX ON resources(wikipedia_slug);
