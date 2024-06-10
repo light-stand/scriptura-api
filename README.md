@@ -36,8 +36,7 @@ flowchart TD
 **Local Routing**
 
 - `localhost:5432` - PostgreSQL
-- `localhost:3000` - Restful API
-- `localhost:8080` - Swagger
-- `localhost:8081` - pgAdmin 4 web panel
-- `localhost:5433/graphql` - GraphQL API
-- `localhost:5433/graphiql` - GraphiQL Web IDE
+- `localhost/api` - Restful API
+- `localhost/api/docs` - Swagger
+- `localhost/graphql` - GraphQL API
+- `localhost/graphiql` - GraphiQL Web IDE
