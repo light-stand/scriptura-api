@@ -11,6 +11,7 @@ services:
       - "80:80"
     volumes:
       - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./config/openapi/api.json:/var/www/api.json
     depends_on:
       - rest
     networks:

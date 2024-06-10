@@ -1,0 +1,2061 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "",
+    "title": "standard public schema",
+    "version": "12.0.3"
+  },
+  "host": "localhost/api",
+  "basePath": "/",
+  "schemes": ["http"],
+  "consumes": [
+    "application/json",
+    "application/vnd.pgrst.object+json;nulls=stripped",
+    "application/vnd.pgrst.object+json",
+    "text/csv"
+  ],
+  "produces": [
+    "application/json",
+    "application/vnd.pgrst.object+json;nulls=stripped",
+    "application/vnd.pgrst.object+json",
+    "text/csv"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": ["Introspection"],
+        "summary": "OpenAPI description (this document)",
+        "produces": ["application/openapi+json", "application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/events": {
+      "get": {
+        "tags": ["events"],
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.events.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.events.theographic_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.events.title"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.events.start_date"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.events.duration"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.events.predecessor"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.events.part_of"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.events.notes"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.events.lag"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.events.lag_type"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/events"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        }
+      }
+    },
+    "/places": {
+      "get": {
+        "tags": ["places"],
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.places.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.places.theographic_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.places.slug"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.places.display_title"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.places.latitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.places.longitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.places.kjv_name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.places.esv_name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.places.feature_type"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.places.open_bible_lat"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.places.open_bible_long"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.places.root_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.places.precision"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.places.aliases"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.places.comment"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.places.status"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.places.ambiguous"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.places.duplicate_of"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/places"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        }
+      }
+    },
+    "/books": {
+      "get": {
+        "tags": ["books"],
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.books.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.books.division_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.books.theographic_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.books.slug"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.books.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.books.short_name"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/books"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        }
+      }
+    },
+    "/resources": {
+      "get": {
+        "tags": ["resources"],
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.resources.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.resources.slug"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.resources.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.resources.alt"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.resources.author"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.resources.publish_year"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.resources.language"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.resources.wikipedia_slug"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/resources"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        }
+      }
+    },
+    "/testaments": {
+      "get": {
+        "tags": ["testaments"],
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.testaments.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.testaments.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.testaments.slug"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.testaments.code"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/testaments"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        }
+      }
+    },
+    "/bible_versions": {
+      "get": {
+        "tags": ["bible_versions"],
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.bible_versions.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.bible_versions.translation"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.bible_versions.status"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.bible_versions.table_name"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/bible_versions"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        }
+      }
+    },
+    "/chapters": {
+      "get": {
+        "tags": ["chapters"],
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.chapters.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.chapters.book_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.chapters.theographic_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.chapters.chapter_num"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/chapters"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        }
+      }
+    },
+    "/verses": {
+      "get": {
+        "tags": ["verses"],
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.verses.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.verses.book_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.verses.chapter_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.verses.theographic_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.verses.chapter_num"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.verses.verse_num"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.verses.year"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.verses.status"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.verses.text"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/verses"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        }
+      }
+    },
+    "/book_divisions": {
+      "get": {
+        "tags": ["book_divisions"],
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.book_divisions.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.book_divisions.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.book_divisions.slug"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.book_divisions.testament_id"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/book_divisions"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        }
+      }
+    },
+    "/people": {
+      "get": {
+        "tags": ["people"],
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.people.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.people.theographic_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.people.slug"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.people.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.people.surname"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.people.display_name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.people.gender"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.people.alias"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.people.min_year"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.people.max_year"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.people.birth_year"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.people.death_year"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.people.status"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.people.is_proper_name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.people.ambiguous"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.people.disambiguation_temp"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/people"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        }
+      }
+    },
+    "/rpc/bible": {
+      "get": {
+        "tags": ["(rpc) bible"],
+        "produces": [
+          "application/json",
+          "application/vnd.pgrst.object+json;nulls=stripped",
+          "application/vnd.pgrst.object+json"
+        ],
+        "parameters": [
+          {
+            "format": "text",
+            "in": "query",
+            "name": "version",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "events": {
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "theographic_id": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "title": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "start_date": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "duration": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "predecessor": {
+          "description": "Note:\nThis is a Foreign Key to `events.id`.<fk table='events' column='id'/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "part_of": {
+          "description": "Note:\nThis is a Foreign Key to `events.id`.<fk table='events' column='id'/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "notes": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "lag": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "lag_type": {
+          "format": "character varying",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "events_verses": {
+      "required": ["id", "event_id", "verse_id"],
+      "properties": {
+        "id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "event_id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>\nThis is a Foreign Key to `events.id`.<fk table='events' column='id'/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "verse_id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>\nThis is a Foreign Key to `verses.id`.<fk table='verses' column='id'/>",
+          "format": "integer",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "places": {
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "theographic_id": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "slug": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "display_title": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "latitude": {
+          "format": "double precision",
+          "type": "number"
+        },
+        "longitude": {
+          "format": "double precision",
+          "type": "number"
+        },
+        "kjv_name": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "esv_name": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "feature_type": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "open_bible_lat": {
+          "format": "double precision",
+          "type": "number"
+        },
+        "open_bible_long": {
+          "format": "double precision",
+          "type": "number"
+        },
+        "root_id": {
+          "description": "Note:\nThis is a Foreign Key to `places.id`.<fk table='places' column='id'/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "precision": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "aliases": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "comment": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "status": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "ambiguous": {
+          "format": "boolean",
+          "type": "boolean"
+        },
+        "duplicate_of": {
+          "description": "Note:\nThis is a Foreign Key to `places.id`.<fk table='places' column='id'/>",
+          "format": "integer",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "books": {
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "division_id": {
+          "description": "Note:\nThis is a Foreign Key to `book_divisions.id`.<fk table='book_divisions' column='id'/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "theographic_id": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "slug": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "name": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "short_name": {
+          "format": "character varying",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "resources": {
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "slug": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "name": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "alt": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "author": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "publish_year": {
+          "format": "integer",
+          "type": "integer"
+        },
+        "language": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "wikipedia_slug": {
+          "format": "character varying",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "places_verses": {
+      "required": ["id", "place_id", "verse_id"],
+      "properties": {
+        "id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "place_id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>\nThis is a Foreign Key to `places.id`.<fk table='places' column='id'/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "verse_id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>\nThis is a Foreign Key to `verses.id`.<fk table='verses' column='id'/>",
+          "format": "integer",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "testaments": {
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "name": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "slug": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "code": {
+          "format": "character varying",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "bible_versions": {
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "translation": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "status": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "table_name": {
+          "format": "character varying",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "chapters": {
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "book_id": {
+          "description": "Note:\nThis is a Foreign Key to `books.id`.<fk table='books' column='id'/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "theographic_id": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "chapter_num": {
+          "format": "integer",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "verses": {
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "book_id": {
+          "description": "Note:\nThis is a Foreign Key to `books.id`.<fk table='books' column='id'/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "chapter_id": {
+          "description": "Note:\nThis is a Foreign Key to `chapters.id`.<fk table='chapters' column='id'/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "theographic_id": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "chapter_num": {
+          "format": "integer",
+          "type": "integer"
+        },
+        "verse_num": {
+          "format": "integer",
+          "type": "integer"
+        },
+        "year": {
+          "format": "integer",
+          "type": "integer"
+        },
+        "status": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "text": {
+          "format": "text",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "book_divisions": {
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "name": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "slug": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "testament_id": {
+          "description": "Note:\nThis is a Foreign Key to `testaments.id`.<fk table='testaments' column='id'/>",
+          "format": "integer",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "people": {
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "theographic_id": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "slug": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "name": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "surname": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "display_name": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "gender": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "alias": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "min_year": {
+          "format": "integer",
+          "type": "integer"
+        },
+        "max_year": {
+          "format": "integer",
+          "type": "integer"
+        },
+        "birth_year": {
+          "format": "integer",
+          "type": "integer"
+        },
+        "death_year": {
+          "format": "integer",
+          "type": "integer"
+        },
+        "status": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "is_proper_name": {
+          "format": "boolean",
+          "type": "boolean"
+        },
+        "ambiguous": {
+          "format": "boolean",
+          "type": "boolean"
+        },
+        "disambiguation_temp": {
+          "format": "character varying",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "people_verses": {
+      "required": ["id", "person_id", "verse_id"],
+      "properties": {
+        "id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "person_id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>\nThis is a Foreign Key to `people.id`.<fk table='people' column='id'/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "verse_id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>\nThis is a Foreign Key to `verses.id`.<fk table='verses' column='id'/>",
+          "format": "integer",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "parameters": {
+    "preferParams": {
+      "name": "Prefer",
+      "description": "Preference",
+      "required": false,
+      "enum": ["params=single-object"],
+      "in": "header",
+      "type": "string"
+    },
+    "preferReturn": {
+      "name": "Prefer",
+      "description": "Preference",
+      "required": false,
+      "enum": ["return=representation", "return=minimal", "return=none"],
+      "in": "header",
+      "type": "string"
+    },
+    "preferCount": {
+      "name": "Prefer",
+      "description": "Preference",
+      "required": false,
+      "enum": ["count=none"],
+      "in": "header",
+      "type": "string"
+    },
+    "preferPost": {
+      "name": "Prefer",
+      "description": "Preference",
+      "required": false,
+      "enum": [
+        "return=representation",
+        "return=minimal",
+        "return=none",
+        "resolution=ignore-duplicates",
+        "resolution=merge-duplicates"
+      ],
+      "in": "header",
+      "type": "string"
+    },
+    "select": {
+      "name": "select",
+      "description": "Filtering Columns",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "on_conflict": {
+      "name": "on_conflict",
+      "description": "On Conflict",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "order": {
+      "name": "order",
+      "description": "Ordering",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "range": {
+      "name": "Range",
+      "description": "Limiting and Pagination",
+      "required": false,
+      "in": "header",
+      "type": "string"
+    },
+    "rangeUnit": {
+      "name": "Range-Unit",
+      "description": "Limiting and Pagination",
+      "required": false,
+      "default": "items",
+      "in": "header",
+      "type": "string"
+    },
+    "offset": {
+      "name": "offset",
+      "description": "Limiting and Pagination",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "limit": {
+      "name": "limit",
+      "description": "Limiting and Pagination",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.events": {
+      "name": "events",
+      "description": "events",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/events"
+      }
+    },
+    "rowFilter.events.id": {
+      "name": "id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.events.theographic_id": {
+      "name": "theographic_id",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.events.title": {
+      "name": "title",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.events.start_date": {
+      "name": "start_date",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.events.duration": {
+      "name": "duration",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.events.predecessor": {
+      "name": "predecessor",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.events.part_of": {
+      "name": "part_of",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.events.notes": {
+      "name": "notes",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.events.lag": {
+      "name": "lag",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.events.lag_type": {
+      "name": "lag_type",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "body.events_verses": {
+      "name": "events_verses",
+      "description": "events_verses",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/events_verses"
+      }
+    },
+    "rowFilter.events_verses.id": {
+      "name": "id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.events_verses.event_id": {
+      "name": "event_id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.events_verses.verse_id": {
+      "name": "verse_id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "body.places": {
+      "name": "places",
+      "description": "places",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/places"
+      }
+    },
+    "rowFilter.places.id": {
+      "name": "id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.places.theographic_id": {
+      "name": "theographic_id",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.places.slug": {
+      "name": "slug",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.places.display_title": {
+      "name": "display_title",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.places.latitude": {
+      "name": "latitude",
+      "required": false,
+      "format": "double precision",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.places.longitude": {
+      "name": "longitude",
+      "required": false,
+      "format": "double precision",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.places.kjv_name": {
+      "name": "kjv_name",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.places.esv_name": {
+      "name": "esv_name",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.places.feature_type": {
+      "name": "feature_type",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.places.open_bible_lat": {
+      "name": "open_bible_lat",
+      "required": false,
+      "format": "double precision",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.places.open_bible_long": {
+      "name": "open_bible_long",
+      "required": false,
+      "format": "double precision",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.places.root_id": {
+      "name": "root_id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.places.precision": {
+      "name": "precision",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.places.aliases": {
+      "name": "aliases",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.places.comment": {
+      "name": "comment",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.places.status": {
+      "name": "status",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.places.ambiguous": {
+      "name": "ambiguous",
+      "required": false,
+      "format": "boolean",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.places.duplicate_of": {
+      "name": "duplicate_of",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "body.books": {
+      "name": "books",
+      "description": "books",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/books"
+      }
+    },
+    "rowFilter.books.id": {
+      "name": "id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.books.division_id": {
+      "name": "division_id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.books.theographic_id": {
+      "name": "theographic_id",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.books.slug": {
+      "name": "slug",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.books.name": {
+      "name": "name",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.books.short_name": {
+      "name": "short_name",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "body.resources": {
+      "name": "resources",
+      "description": "resources",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/resources"
+      }
+    },
+    "rowFilter.resources.id": {
+      "name": "id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.resources.slug": {
+      "name": "slug",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.resources.name": {
+      "name": "name",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.resources.alt": {
+      "name": "alt",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.resources.author": {
+      "name": "author",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.resources.publish_year": {
+      "name": "publish_year",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.resources.language": {
+      "name": "language",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.resources.wikipedia_slug": {
+      "name": "wikipedia_slug",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "body.places_verses": {
+      "name": "places_verses",
+      "description": "places_verses",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/places_verses"
+      }
+    },
+    "rowFilter.places_verses.id": {
+      "name": "id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.places_verses.place_id": {
+      "name": "place_id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.places_verses.verse_id": {
+      "name": "verse_id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "body.testaments": {
+      "name": "testaments",
+      "description": "testaments",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/testaments"
+      }
+    },
+    "rowFilter.testaments.id": {
+      "name": "id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.testaments.name": {
+      "name": "name",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.testaments.slug": {
+      "name": "slug",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.testaments.code": {
+      "name": "code",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "body.bible_versions": {
+      "name": "bible_versions",
+      "description": "bible_versions",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/bible_versions"
+      }
+    },
+    "rowFilter.bible_versions.id": {
+      "name": "id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.bible_versions.translation": {
+      "name": "translation",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.bible_versions.status": {
+      "name": "status",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.bible_versions.table_name": {
+      "name": "table_name",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "body.chapters": {
+      "name": "chapters",
+      "description": "chapters",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/chapters"
+      }
+    },
+    "rowFilter.chapters.id": {
+      "name": "id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.chapters.book_id": {
+      "name": "book_id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.chapters.theographic_id": {
+      "name": "theographic_id",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.chapters.chapter_num": {
+      "name": "chapter_num",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "body.verses": {
+      "name": "verses",
+      "description": "verses",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/verses"
+      }
+    },
+    "rowFilter.verses.id": {
+      "name": "id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.verses.book_id": {
+      "name": "book_id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.verses.chapter_id": {
+      "name": "chapter_id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.verses.theographic_id": {
+      "name": "theographic_id",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.verses.chapter_num": {
+      "name": "chapter_num",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.verses.verse_num": {
+      "name": "verse_num",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.verses.year": {
+      "name": "year",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.verses.status": {
+      "name": "status",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.verses.text": {
+      "name": "text",
+      "required": false,
+      "format": "text",
+      "in": "query",
+      "type": "string"
+    },
+    "body.book_divisions": {
+      "name": "book_divisions",
+      "description": "book_divisions",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/book_divisions"
+      }
+    },
+    "rowFilter.book_divisions.id": {
+      "name": "id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.book_divisions.name": {
+      "name": "name",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.book_divisions.slug": {
+      "name": "slug",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.book_divisions.testament_id": {
+      "name": "testament_id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "body.people": {
+      "name": "people",
+      "description": "people",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/people"
+      }
+    },
+    "rowFilter.people.id": {
+      "name": "id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.people.theographic_id": {
+      "name": "theographic_id",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.people.slug": {
+      "name": "slug",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.people.name": {
+      "name": "name",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.people.surname": {
+      "name": "surname",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.people.display_name": {
+      "name": "display_name",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.people.gender": {
+      "name": "gender",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.people.alias": {
+      "name": "alias",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.people.min_year": {
+      "name": "min_year",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.people.max_year": {
+      "name": "max_year",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.people.birth_year": {
+      "name": "birth_year",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.people.death_year": {
+      "name": "death_year",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.people.status": {
+      "name": "status",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.people.is_proper_name": {
+      "name": "is_proper_name",
+      "required": false,
+      "format": "boolean",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.people.ambiguous": {
+      "name": "ambiguous",
+      "required": false,
+      "format": "boolean",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.people.disambiguation_temp": {
+      "name": "disambiguation_temp",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "body.people_verses": {
+      "name": "people_verses",
+      "description": "people_verses",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/people_verses"
+      }
+    },
+    "rowFilter.people_verses.id": {
+      "name": "id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.people_verses.person_id": {
+      "name": "person_id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.people_verses.verse_id": {
+      "name": "verse_id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    }
+  },
+  "externalDocs": {
+    "description": "PostgREST Documentation",
+    "url": "https://postgrest.org/en/v12.0/api.html"
+  }
+}
