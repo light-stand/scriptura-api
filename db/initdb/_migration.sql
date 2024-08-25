@@ -1,6 +1,5 @@
 
 -- Schema
-CREATE SCHEMA bible;
 CREATE SCHEMA resource;
 
 -- Role
@@ -8,9 +7,6 @@ CREATE USER anon;
 
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO anon;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO anon;
-GRANT USAGE ON SCHEMA bible TO anon;
-GRANT SELECT ON ALL TABLES IN SCHEMA bible TO anon;
-ALTER DEFAULT PRIVILEGES IN SCHEMA bible GRANT SELECT ON TABLES TO anon;
 GRANT SELECT ON ALL TABLES IN SCHEMA resource TO anon;
 ALTER DEFAULT PRIVILEGES IN SCHEMA resource GRANT SELECT ON TABLES TO anon;
 
@@ -102,7 +98,6 @@ CREATE TABLE
         verse_num int,
         "year" int,
         "status" varchar,
-        text text
     );
 
 COPY verses (
@@ -120,6 +115,37 @@ FROM '/data/verses.csv' DELIMITER ',' CSV HEADER;
 CREATE INDEX ON verses(book_id);
 CREATE INDEX ON verses(chapter_id);
 CREATE INDEX ON verses(verse_num);
+
+-- Bible versions
+CREATE TABLE
+    versions (
+        id int PRIMARY KEY,
+        "translation" varchar,
+        "status" varchar,
+        "table_name" varchar
+    );
+
+COPY versions (id, translation, "status", table_name)
+FROM '/data/versions.csv' DELIMITER ',' CSV HEADER;
+
+CREATE INDEX ON versions("translation");
+CREATE INDEX ON versions("status");
+CREATE INDEX ON versions(table_name);
+
+-- Bible versions
+CREATE TABLE
+    verse_texts (
+        id int PRIMARY KEY,
+        "verse_id" int references verses(id),
+        "version_id" int references versions(id),
+        "text" varchar
+    );
+
+COPY verse_texts (id, "verse_id", "version_id", "text")
+FROM '/data/verse_texts.csv' DELIMITER ';' CSV HEADER; -- TEMP delimiter
+
+CREATE INDEX ON verse_texts("verse_id");
+CREATE INDEX ON verse_texts("version_id");
 
 
 -- Encyclopedia tables
@@ -302,23 +328,6 @@ COPY places_verses (id, place_id, verse_id)
 FROM '/data/places_verses.csv' DELIMITER ',' CSV HEADER;
 
 CREATE INDEX ON places_verses(place_id, verse_id);
-
--- Bible versions
-CREATE TABLE
-    bible_versions (
-        id int PRIMARY KEY,
-        "translation" varchar,
-        "status" varchar,
-        "table_name" varchar
-    );
-
-COPY bible_versions (id, translation, "status", table_name)
-FROM '/data/bible_versions.csv' DELIMITER ',' CSV HEADER;
-
-CREATE INDEX ON bible_versions("translation");
-CREATE INDEX ON bible_versions("status");
-CREATE INDEX ON bible_versions(table_name);
-
 
 -- Resources
 CREATE TABLE
