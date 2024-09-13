@@ -91,27 +91,24 @@ CREATE INDEX ON chapters(chapter_num);
 CREATE TABLE
     verses (
         id int PRIMARY KEY,
+        "uid" varchar,
         book_id int references books(id),
         chapter_id int references chapters(id),
-        theographic_id varchar,
         chapter_num int,
-        verse_num int,
-        "year" int,
-        "status" varchar,
+        verse_num int
     );
 
 COPY verses (
     id,
+    "uid",
     book_id,
     chapter_id,
-    theographic_id,
     chapter_num,
-    verse_num,
-    year,
-    "status"
+    verse_num
 )
 FROM '/data/verses.csv' DELIMITER ',' CSV HEADER;
 
+CREATE INDEX ON verses("uid");
 CREATE INDEX ON verses(book_id);
 CREATE INDEX ON verses(chapter_id);
 CREATE INDEX ON verses(verse_num);
@@ -135,14 +132,17 @@ CREATE INDEX ON versions(table_name);
 -- Bible versions
 CREATE TABLE
     verse_texts (
-        id int PRIMARY KEY,
+        id SERIAL PRIMARY KEY,
         "verse_id" int references verses(id),
-        "version_id" int references versions(id),
+        -- "version_id" int references versions(id), TEMP
+        "version_id" int,
         "text" varchar
     );
 
-COPY verse_texts (id, "verse_id", "version_id", "text")
-FROM '/data/verse_texts.csv' DELIMITER ';' CSV HEADER; -- TEMP delimiter
+COPY verse_texts ("verse_id", "version_id", "text")
+FROM PROGRAM 'cat /data/verse_texts/*.csv' DELIMITER ',' CSV HEADER;
+
+-- TEMP ---------------- 
 
 CREATE INDEX ON verse_texts("verse_id");
 CREATE INDEX ON verse_texts("version_id");
